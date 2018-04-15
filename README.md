@@ -20,4 +20,4 @@ All the steps in one image
 
 
 
-![gitpageexample02.png]
+!(gitpageexample02.png)
