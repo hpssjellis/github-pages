@@ -18,6 +18,6 @@ All the steps in one image
 
 .
 
+![Github pages all steps in one image](gitpageexample02.png)
 
 
-!(gitpageexample02.png)
