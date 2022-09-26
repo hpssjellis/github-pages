@@ -1,0 +1,102 @@
+<html>
+
+  <script src="https://unpkg.com/browse/github-api@3.4.0/dist/GitHub.min.js"></script>
+
+  
+  <script>
+  // using github.js access the issues of any github repository
+  // and display them in a table
+  //  - the table is created in the DOM
+  //  - the table is inserted into the body of the document
+  //  - the table is styled using CSS
+  //  - the table is sorted using the sorttable.js library
+  //  - the table is paginated using the pagination.js library
+    
+  // create a new GitHub object
+  var github = new GitHub({
+    username: "username",
+    password: "password",
+    auth: "basic"
+  });   
+
+  // get the issues for the repository
+
+
+  github.getIssues("hpssjellis", "github-pages", function(err, issues) {
+    // create a table
+    var table = document.createElement("table");
+    table.setAttribute("id", "issues");
+    table.setAttribute("class", "sortable");
+    table.setAttribute("border", "1");
+    table.setAttribute("cellspacing", "0");
+    table.setAttribute("cellpadding", "5");
+    table.setAttribute("style", "border-collapse: collapse;");
+
+    // create a table header
+    var thead = document.createElement("thead");
+    var tr = document.createElement("tr");
+    var th = document.createElement("th");
+    th.appendChild(document.createTextNode("Issue"));
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("Title"));
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("State"));
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("Created"));
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("Updated"));
+    tr.appendChild(th);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    // create a table body
+    var tbody = document.createElement("tbody");
+    for (var i = 0; i < issues.length; i++) {
+      var tr = document.createElement("tr");
+      var td = document.createElement("td");
+      td.appendChild(document.createTextNode(issues[i].number));
+      tr.appendChild(td);
+      td = document.createElement("td");
+      td.appendChild(document.createTextNode(issues[i].title));
+      tr.appendChild(td);
+      td = document.createElement("td");
+      td.appendChild(document.createTextNode(issues[i].state));
+      tr.appendChild(td);
+      td = document.createElement("td");
+      td.appendChild(document.createTextNode(issues[i].created_at));
+      tr.appendChild(td);
+      td = document.createElement("td");
+      td.appendChild(document.createTextNode(issues[i].updated_at));
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+
+    // insert the table into the body of the document
+    document.body.appendChild(table);
+
+    // sort the table
+    sorttable.makeSortable(table);
+
+    // paginate the table
+    var pager = new Pager('issues', 10);
+    pager.init();
+    pager.showPageNav('pager', 'pageNavPosition');
+    pager.showPage(1);
+  });
+  </script>
+
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <button onclick="runGithub()">Run Github</button>
+
+
+
+
+         
+
+</html>
