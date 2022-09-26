@@ -1,4 +1,44 @@
-This is a true wewbpage on github.<br>
-Probably can't have thousands of views a day
 
-This is a link to my dist directory <a href="dist/index.html">dist/index.html</a>
+<script src="https://unpkg.com/browse/github-api@3.4.0/"></script>
+
+version 0.0.1-1<br>
+open the console
+
+
+
+<script>
+var gh = new GitHub({
+  username: 'foo',
+  password: 'bar'
+});
+
+var user = 'slunk32';
+gh.getUser(user).getRepos()
+  // turn the json objects we fetched into `Repository`s
+  .then(function(httpPromise) {
+      return httpPromise.data.map(function(repoJson) {
+          // console.log('repo '  repoJson.name);
+          return gh.getRepo(user, repoJson.name);
+      });
+  })
+  // Curry promises to fetch webhooks
+   .then(function(repos) {
+      console.log(repos);
+      return Promise.all(repos.map(function(repo) {
+          return repo.listHooks();
+      }));
+   })
+   // Fetch the webhooks json
+   .then(function(listOfListOfHooks) {
+       listOfListOfHooks = listOfListOfHooks || []; // monkey-patch for non-authenticated users
+       listOfListOfHooks.forEach(function(hooksHttpResonse) {
+           console.log('hooks for '  hooksHttpResonse.config.url);
+           console.log(hooksHttpResonse.data);
+       });
+   })
+   .catch(function(error) {
+       console.log('an error occurred fetching the webhooks', error);
+   });
+  
+  
+</script>
