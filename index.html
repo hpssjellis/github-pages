@@ -1,7 +1,7 @@
 
 <script src="https://unpkg.com/browse/github-api@3.4.0/"></script>
 
-version 0.0.1-1<br>
+version 0.0.2-1<br>
 open the console
 
 
@@ -32,7 +32,7 @@ gh.getUser(user).getRepos()
    .then(function(listOfListOfHooks) {
        listOfListOfHooks = listOfListOfHooks || []; // monkey-patch for non-authenticated users
        listOfListOfHooks.forEach(function(hooksHttpResonse) {
-           console.log('hooks for '  hooksHttpResonse.config.url);
+           console.log('hooks for ' + hooksHttpResonse.config.url);
            console.log(hooksHttpResonse.data);
        });
    })
